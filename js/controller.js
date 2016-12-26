@@ -416,7 +416,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
                     
                    
-                    if(!already_have && response.from.name !== $scope.data_about_me.name){
+                    if(!already_have && response.from && response.from.name !== $scope.data_about_me.name){
                       peoplecount++;
                       $scope.num_names_appear.push({
                         key : response.from.name,
