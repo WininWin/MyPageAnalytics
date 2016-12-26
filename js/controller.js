@@ -303,13 +303,14 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
             var curr = "curr";
            while(should_get_mode_data){
 
-            if(counter > 25){
+            if(counter > 15){
               should_get_mode_data = false;
             }
 
             if(curr !== nextpage){
+              // console.log("counter: " + counter);
                 curr = nextpage;
-              FBapi.getGraphApi($scope.page).then(function(response){
+              FBapi.getGraphApi(nextpage).then(function(response){
 
 
               if(response && response.data && response.data.length !== 0){

@@ -21,7 +21,7 @@ FBServices.factory('FBapi', function($http, $q, $window){
 						else{
 							reject(Error('There was a network error.'));
 						}
-				},600)
+				},300)
 
 		});
 
@@ -43,7 +43,7 @@ FBServices.factory('FBapi', function($http, $q, $window){
 						else{
 							reject(Error('There was a network error.'));
 						}
-				},600)
+				},300)
 
 		});
 	}
