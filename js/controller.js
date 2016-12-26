@@ -263,7 +263,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
           console.log(Error);
         });
 
-        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&since=2012-1-1&limit=1000').then( function(val) {
+        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=1000').then( function(val) {
            $scope.data = val.data;
            
            analyze_data($scope.data);
