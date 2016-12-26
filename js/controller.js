@@ -210,6 +210,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
     function init(){
 
       console.log($scope.myDate);
+
+      //var since = $scope.myDate.getTime();
       //init values
       $scope.watcher = [false,false,false,false,false,false];
       $scope.data = [];
@@ -268,8 +270,31 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
         FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=100&since=' + $scope.myDate ).then( function(val) {
            $scope.data = val.data;
+        
+           var should_get_mode_data = false; 
+           if($scope.data.length === 100){
+                should_get_mode_data = true;
+           }
+           while(should_get_mode_data){
+            FBapi.getGraphApi(val.paging.next).then(function(response){
+
+
+              if(response.data.length !== 0){
+                    $scope.data =  $scope.data.concat(response.data);
+              }
+              else{
+                should_get_mode_data = false;
+              }
+                
+                
+
+            });
+           }
            
-           analyze_data($scope.data);
+           if(!should_get_mode_data){
+                 analyze_data($scope.data);
+           }
+        
            
           },function(Error) {
           console.log(Error);
@@ -280,7 +305,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
     }
 
     function analyze_data(data){
-              
+
               var ids = [];
             
               var num_events = {};
