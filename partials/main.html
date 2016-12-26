@@ -1,0 +1,178 @@
+<div ng-controller='MainCtrl'>
+		<div layout="row" layout-xs="column" layout-align="center center">
+			<div class="md-button md-primary" ng-click="refresh()">Retrieve Information</div>
+		</div>
+
+	<div layout="row" layout-xs="column" layout-sm="column" >
+
+	
+  <div class = "databox" layout="column" layout-align="start center" flex>
+  		<div layout="row"  layout-align="center center" class="md-subhead">{{data_name[0]}}</div>
+   		<div ng-show="!done_p_info"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
+
+      <div ng-if="done_p_info">
+
+        <div id = "info" layout="column" ng-model="data_about_me">
+          <div>Name : {{data_about_me.name}}</div>
+          <div>Total posts in feed : {{data_about_me.total_posts_in_feed}}</div>
+          <div>Total people in feed : {{data_about_me.total_people_in_feed}}</div>
+          <div>Number of profile update : {{data_about_me.total_profile_update}}</div>
+          <div layout="row" layout-align="space-around center"  layout-xs="column">
+             <md-card md-theme="{{ showDarkTheme ? 'dark-orange' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-title">Most Favorite Profile</span>
+          
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content layout="row" layout-align="center center">
+          <div class="md-media-lg card-media">
+              <div ng-show="!img_done"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
+
+             <img id="img-box" ng-show="img_done" ng-src="{{most_likes_profile}}" >
+          </div>
+
+          <md-card-actions layout="column">
+           
+          </md-card-actions>
+        </md-card-content>
+      </md-card>
+
+        <md-card md-theme="{{ showDarkTheme ? 'dark-orange' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-title">Person who appears most</span>
+          
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content layout="row" layout-align="center center">
+          <div class="md-media-lg card-media">
+            <div ng-show="!img_done"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
+
+            <img id="img-box" ng-show="img_done" ng-src="{{most_visitied_profile}}" >
+          </div>
+
+          <md-card-actions layout="column">
+           
+          </md-card-actions>
+        </md-card-content>
+      </md-card>
+          </div>
+        </div>
+           
+
+      </div>
+  </div>
+   <div class = "databox" layout="column" layout-align="start center" flex>
+   		<div layout="row"  layout-align="center center" class="md-subhead">{{data_name[1]}}</div>
+   		<div layout="row"  layout-align="center center" ng-show="!done_visited"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
+
+      <div ng-if="done_visited">
+        <div>People who appears in your feed</div>
+
+        <nvd3 options="options_one" data="num_names_appear" ></nvd3>
+
+      </div>
+  </div>
+
+
+	</div>
+
+  <div layout="row" layout-xs="column" layout-sm="column" >
+
+  
+  <div class = "databox" layout="column" layout-align="start center" flex>
+      <div class="md-subhead">{{data_name[2]}}</div>
+      <div ng-show="!done_profile"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
+
+      <div ng-if="done_profile">
+
+        
+           <md-card ng-repeat = "value in profile_link" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Updated Time : {{value.created_time}}</span>
+            <span class="md-subhead">Likes : {{value.likes}}</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-md card-media">
+              <img id="medium-img" ng-src="{{value.link}}">
+             
+            </div>
+          </md-card-title-media>
+        </md-card-title>
+      
+      </md-card>
+
+
+      </div>
+  </div>
+   <div class = "databox" layout="column" layout-align="start center" flex>
+      <div class="md-subhead">{{data_name[3]}}</div>
+      <div ng-show="!done_word"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
+
+      <div ng-if = "done_word">
+
+      
+          <div>Words that you and other people used in your feed more than once</div>
+          <div layout="row" layout-align="center center" id = "topwords">Top Five words</div>
+          <div layout="row" layout-align="space-around center"> 
+                <div ng-repeat = "i in [1,2,3,4,5]">
+                  {{i}}.{{word_data[word_data.length-i].key}}
+                </div>
+          </div>
+            
+       
+          <nvd3 options="options_two" data="word_data"></nvd3>
+
+      </div>
+  </div>
+
+
+  </div>
+
+  <div layout="row" layout-xs="column" layout-sm="column" >
+
+  
+  <div class = "databox" layout="column" layout-align="start none" flex>
+      <div layout="row" layout-align="center center" class="md-subhead">{{data_name[4]}}</div>
+      <div layout="row" layout-align="center center" ng-show="!done_post"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
+    
+      <div layout="column" ng-if="done_post">
+
+        <div layout="row" layout-align="center center">
+          Number of posts by dates
+        </div>
+
+        <div layout="row">
+        <div flex="100">
+          <nvd3 options="options_three" data="number_of_events" ></nvd3>
+
+        </div>
+           </div>
+      </div>
+  </div>
+  
+
+
+  </div>
+
+  <div layout="row" layout-xs="column" layout-sm="column" >
+ <div class = "databox" layout="column" layout-align="start none" flex>
+      <div layout="row" layout-align="center center" class="md-subhead">{{data_name[5]}}</div>
+      <div layout="row" layout-align="center center" ng-show="!done_network"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
+
+      <div layout="row" ng-if="done_network">
+         <div flex="100">
+        <nvd3 options="options_four" data="final_network" class="with-3d-shadow with-transitions"></nvd3>
+       
+          </div>
+      </div>
+  </div>
+  </div>
+
+
+
+
+
+</div>
