@@ -229,8 +229,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
     //init function
     function init(){
 
-      console.log($scope.myDate);
-
+    
 
       //var since = $scope.myDate.getTime();
       //init values
@@ -252,6 +251,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
       $scope.final_network;
 
+      $scope.nextpage;
+      $scope.should_get_mode_data
 
          $scope.profile_link = {};
          $scope.word_data = [];
@@ -293,43 +294,66 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
         FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=100&since=' + $scope.myDate ).then( function(val) {
            $scope.data = val.data;
-          
-           var should_get_mode_data = false; 
-           if($scope.data.length === 100){
-                should_get_mode_data = true;
-           }
-           var counter = 0; 
-            var nextpage = val.paging.next;
-            var curr = "curr";
-           while(should_get_mode_data){
-
-            if(counter > 15){
-              should_get_mode_data = false;
-            }
-
-            if(curr !== nextpage){
-              // console.log("counter: " + counter);
-                curr = nextpage;
-              FBapi.getGraphApi(nextpage).then(function(response){
-
-
-              if(response && response.data && response.data.length !== 0){
-                    $scope.data =  $scope.data.concat(response.data);
-                    nextpage = response.paging.next;
-                    counter++;
-              }
-              else{
-                should_get_mode_data = false;
-              }
-                
-                
-
-            });
-            }
-            
-           }
+            $scope.nextpage = val.paging.next;
+           $scope.should_get_mode_data = false; 
            
-           if(!should_get_mode_data){
+
+           // if($scope.data.length === 3){
+           //      $scope.should_get_mode_data = true;
+           // }
+          
+
+
+
+           // $scope.loop_counter = 0,
+           //    stop = 10;
+
+           //  FBapi.promiseWhile(function() {
+           //      // Condition for stopping
+           //      return ($scope.loop_counter) < stop && ($scope.should_get_mode_data);
+           //  }, function() {
+           //      return FBapi.getPageCall($scope.nextpage, $scope.data,  $scope.loop_counter, $scope.should_get_mode_data);
+           //  }).then(function() {
+           //      // Notice we can chain it because it's a Promise, this will run after completion of the promiseWhile Promise!
+           //      //console.log("Done");
+                
+           //  });
+
+
+
+           // var counter = 0; 
+           //  $scope.nextpage = val.paging.next;
+           //  var curr = "curr";
+           // while($scope.should_get_mode_data){
+           // // debugger;
+           //  if(counter > 20){
+           //    $scope.should_get_mode_data = false;
+           //  }
+
+           //  if(curr !== $scope.nextpage){
+              
+
+           //      curr = $scope.nextpage;
+           //    FBapi.getGraphApi(curr).then(function(response){
+           //         console.log("counter: " + counter);
+
+           //    if(response && response.data && response.data.length !== 0){
+           //          $scope.data =  $scope.data.concat(response.data);
+           //         $scope.nextpage = response.paging.next;
+           //          counter++;
+           //           console.log("counter: " + counter);
+           //    }
+           //    else{
+           //     $scope.should_get_mode_data = false;
+           //    }
+                
+                
+
+           //  });
+           //  }      
+           // }
+           
+           if(!$scope.should_get_mode_data){
                  analyze_data($scope.data);
            }
         
