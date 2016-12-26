@@ -7,12 +7,32 @@ appControllers.controller('HeaderCtrl', ['$rootScope', '$state','$window', '$sco
 
      }]);
 
-
-
-
 appControllers.controller('LoginCtrl', ['$rootScope', '$state','$window', '$scope', '$http',
   function ($rootScope, $state,$window, $scope, $http) {
 
+          if($rootScope.privacy){
+            $rootScope.privacy = 0;
+            $window.location.reload();
+          }
+
+     }]);
+
+
+
+appControllers.controller('FooterCtrl', ['$rootScope', '$state','$window', '$scope', '$http',
+  function ($rootScope, $state,$window, $scope, $http) {
+
+      $scope.goback = function(){
+        if(FB && $rootScope.username){
+          $state.go('app.main');
+        }
+
+        else{
+          $rootScope.privacy = 1;
+          $state.go('app');
+        }
+        
+      }
 
 
   	 }]);
@@ -211,6 +231,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
       console.log($scope.myDate);
 
+
       //var since = $scope.myDate.getTime();
       //init values
       $scope.watcher = [false,false,false,false,false,false];
@@ -226,6 +247,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
           "nodes":[],
           "links":[] 
         };
+
+     
 
       $scope.final_network;
 
@@ -261,7 +284,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
          FBapi.getGraphApi('/me').then(function(val){
              $scope.data_about_me.name = val.name;
-            
+              $rootScope.username = val.name;
              $scope.$apply();
            
         },function(Error) {
@@ -270,17 +293,29 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
         FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=100&since=' + $scope.myDate ).then( function(val) {
            $scope.data = val.data;
-        
+          
            var should_get_mode_data = false; 
            if($scope.data.length === 100){
                 should_get_mode_data = true;
            }
+           var counter = 0; 
+            var nextpage = val.paging.next;
+            var curr = "curr";
            while(should_get_mode_data){
-            FBapi.getGraphApi(val.paging.next).then(function(response){
+
+            if(counter > 25){
+              should_get_mode_data = false;
+            }
+
+            if(curr !== nextpage){
+                curr = nextpage;
+              FBapi.getGraphApi($scope.page).then(function(response){
 
 
               if(response && response.data && response.data.length !== 0){
                     $scope.data =  $scope.data.concat(response.data);
+                    nextpage = response.paging.next;
+                    counter++;
               }
               else{
                 should_get_mode_data = false;
@@ -289,6 +324,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                 
 
             });
+            }
+            
            }
            
            if(!should_get_mode_data){
@@ -415,7 +452,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                 var message_array = [];
 
               for(var i = 0; i < ids.length; i++){
-                FBapi.getGraphApi('/' + ids[i] + '?fields=from,link,message').then(function(response){
+                FBapi.getGraphApi('/' + ids[i] + '?fields=from,message').then(function(response){
                  
 
                     if(response.message){
