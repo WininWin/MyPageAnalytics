@@ -65,6 +65,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
     }, true);
 
+  
+ 
     //visited people chart
     $scope.options_one = {
             chart: {
@@ -203,13 +205,14 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
     };
 
 
+     $scope.myDate = new Date("2010/01/01");
     //init function
     function init(){
 
-
+      console.log($scope.myDate);
       //init values
       $scope.watcher = [false,false,false,false,false,false];
-      $scope.data = {};
+      $scope.data = [];
       $scope.num_names_appear = [];
       $scope.done_p_info = false;
       $scope.done_visited = false;
@@ -263,7 +266,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
           console.log(Error);
         });
 
-        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=1000').then( function(val) {
+        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=100&since=' + $scope.myDate ).then( function(val) {
            $scope.data = val.data;
            
            analyze_data($scope.data);
@@ -277,7 +280,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
     }
 
     function analyze_data(data){
-
+              
               var ids = [];
             
               var num_events = {};
@@ -374,7 +377,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                   });
               }
 
-              $scope.data_about_me.total_posts_in_feed = ids.length;
+              $scope.data_about_me.total_posts_in_feed = data.length;
               $scope.data_about_me.total_profile_update = profile_update_count;
             
 

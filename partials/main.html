@@ -1,5 +1,13 @@
-<div ng-controller='MainCtrl'>
-		<div layout="row" layout-xs="column" layout-align="center center">
+<div ng-controller='MainCtrl' ng-cloak>
+
+
+		<div layout="row" layout-xs="column" layout-align="space-around center">
+       <div >
+         <md-content>
+        <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+         </md-content>
+      </div>
+  
 			<div class="md-button md-primary" ng-click="refresh()">Retrieve Information</div>
 		</div>
 
