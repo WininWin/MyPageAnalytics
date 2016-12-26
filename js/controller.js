@@ -279,7 +279,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
             FBapi.getGraphApi(val.paging.next).then(function(response){
 
 
-              if(response.data.length !== 0){
+              if(response && response.data && response.data.length !== 0){
                     $scope.data =  $scope.data.concat(response.data);
               }
               else{
