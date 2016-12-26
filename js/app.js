@@ -46,7 +46,22 @@ $urlRouterProvider.otherwise('/');
         }
       }
 
-    });
+    })
+
+     .state('app.privacy', {
+
+      url: 'privacy',
+      views:{
+        'main@' : {
+          templateUrl: 'partials/privacyinfo.html'
+        }
+      }
+
+    })
+
+
+
+    ;
   }]);
 
 app.run(['$rootScope', '$window','$state',
@@ -101,6 +116,9 @@ app.run(['$rootScope', '$window','$state',
        The app id of the web app;
        To register a new app visit Facebook App Dashboard
        ( https://developers.facebook.com/apps/ )
+      localtest : 877976802338807
+      hosttest : 783986768404478
+
       */
 
       appId: '783986768404478',
