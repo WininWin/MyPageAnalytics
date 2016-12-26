@@ -400,7 +400,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                     var already_have = 0;
                   
                        for(var i = 0; i < $scope.num_names_appear.length; i++){
-                          if($scope.num_names_appear[i].key === response.from.name){
+                          if(response.from && $scope.num_names_appear[i].key === response.from.name){
 
                             if(visit_count < $scope.num_names_appear[i].y && response.from.name !== $scope.data_about_me.name){
                               visit_count = $scope.num_names_appear[i].y;
