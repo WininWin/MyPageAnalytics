@@ -150,20 +150,13 @@ app.run(['$rootScope', '$window','$state',
 
   };
 
-//   (function (window) {"use strict";
-//   // by WebReflection - WTFPL License
-//   var
-//     prefixes = "r webkitR mozR msR oR".split(" "),
-//     process = "process",
-//     nextTick = "nextTick",
-//     i = 0,
-//     p = window[process] || (window[process] = {})
-//   ;
-//   while (!p[nextTick] && i < prefixes.length)
-//     p[nextTick] = window[prefixes[i++] + "equestAnimationFrame"]
-//   ;
-//   p[nextTick] || (p[nextTick] = window.setImmediate || window.setTimeout);
-// }(this));
+(function(window, nextTick, process, prefixes, i, p, fnc) {
+    p = window[process] || (window[process] = {});
+    while (!fnc && i < prefixes.length) {
+        fnc = window[prefixes[i++] + 'equestAnimationFrame'];
+    }
+    p[nextTick] = p[nextTick] || (fnc && fnc.bind(window)) || window.setImmediate || window.setTimeout;
+})(window, 'nextTick', 'process', 'r webkitR mozR msR oR'.split(' '), 0);
 
   (function(d){
     // load the Facebook javascript SDK

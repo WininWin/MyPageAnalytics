@@ -98,14 +98,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                 duration: 500,
                 labelThreshold: 0.03,
                 labelSunbeamLayout: true,
-                legend: {
-                    margin: {
-                        top: 5,
-                        right: 100,
-                        bottom: 0,
-                        left: 0
-                    }
-                }
+                showLegend: false
             }
         };
 
@@ -292,7 +285,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
           console.log(Error);
         });
 
-        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=100&since=' + $scope.myDate ).then( function(val) {
+        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=300&since=' + $scope.myDate ).then( function(val) {
            $scope.data = val.data;
             $scope.nextpage = val.paging.next;
            $scope.should_get_mode_data = false; 
