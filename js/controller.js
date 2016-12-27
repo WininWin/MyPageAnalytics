@@ -244,8 +244,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
       $scope.final_network;
 
-      $scope.nextpage;
-      $scope.should_get_mode_data
+      // $scope.nextpage;
+      // $scope.should_get_mode_data
 
          $scope.profile_link = {};
          $scope.word_data = [];
@@ -288,7 +288,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
         FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=500&since=' + $scope.myDate ).then( function(val) {
            $scope.data = val.data;
-            $scope.nextpage = val.paging.next;
+           // $scope.nextpage = val.paging.next;
            $scope.should_get_mode_data = false; 
            
            //future use 
