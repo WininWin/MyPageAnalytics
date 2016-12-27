@@ -285,19 +285,15 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
           console.log(Error);
         });
 
-        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=300&since=' + $scope.myDate ).then( function(val) {
+        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=500&since=' + $scope.myDate ).then( function(val) {
            $scope.data = val.data;
             $scope.nextpage = val.paging.next;
            $scope.should_get_mode_data = false; 
            
-
+           //future use 
            // if($scope.data.length === 3){
            //      $scope.should_get_mode_data = true;
            // }
-          
-
-
-
            // $scope.loop_counter = 0,
            //    stop = 10;
 
@@ -312,39 +308,6 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                 
            //  });
 
-
-
-           // var counter = 0; 
-           //  $scope.nextpage = val.paging.next;
-           //  var curr = "curr";
-           // while($scope.should_get_mode_data){
-           // // debugger;
-           //  if(counter > 20){
-           //    $scope.should_get_mode_data = false;
-           //  }
-
-           //  if(curr !== $scope.nextpage){
-              
-
-           //      curr = $scope.nextpage;
-           //    FBapi.getGraphApi(curr).then(function(response){
-           //         console.log("counter: " + counter);
-
-           //    if(response && response.data && response.data.length !== 0){
-           //          $scope.data =  $scope.data.concat(response.data);
-           //         $scope.nextpage = response.paging.next;
-           //          counter++;
-           //           console.log("counter: " + counter);
-           //    }
-           //    else{
-           //     $scope.should_get_mode_data = false;
-           //    }
-                
-                
-
-           //  });
-           //  }      
-           // }
            
            if(!$scope.should_get_mode_data){
                  analyze_data($scope.data);

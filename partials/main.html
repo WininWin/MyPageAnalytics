@@ -71,12 +71,12 @@
 
       </div>
   </div>
-   <div class = "databox" layout="column" layout-align="start center" flex>
+   <div class = "databox" layout="column" layout-align="start none" flex>
    		<div layout="row"  layout-align="center center" class="md-subhead">{{data_name[1]}}</div>
    		<div layout="row"  layout-align="center center" ng-show="!done_visited"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
 
       <div ng-if="done_visited">
-        <div>People who appears in your feed</div>
+        <div layout="row"  layout-align="center center">People who appears in your feed</div>
 
         <nvd3 options="options_one" data="num_names_appear" ></nvd3>
 
@@ -115,14 +115,14 @@
 
       </div>
   </div>
-   <div class = "databox" layout="column" layout-align="start center" flex>
-      <div class="md-subhead">{{data_name[3]}}</div>
-      <div ng-show="!done_word"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
+   <div class = "databox" layout="column" layout-align="start none" flex>
+      <div layout="row" layout-align="center center" class="md-subhead">{{data_name[3]}}</div>
+      <div layout="row" layout-align="center center" ng-show="!done_word"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
 
       <div ng-if = "done_word">
 
       
-          <div>Words that you and other people used in your feed more than once</div>
+          <div layout="row"  layout-align="center center">Words that you and other people used in your feed more than once</div>
           <div layout="row" layout-align="center center" id = "topwords">Top Five words</div>
           <div layout="row" layout-align="space-around center"> 
                 <div ng-repeat = "i in [1,2,3,4,5]">

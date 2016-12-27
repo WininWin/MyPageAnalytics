@@ -5,7 +5,7 @@ FBServices.factory('FBapi', function($http, $q, $window){
 
 	var myfeed;
 
-
+	//future use 
 	// var promiseWhile = function(condition, action) {
 	//     var resolver = Promise.defer();
 
