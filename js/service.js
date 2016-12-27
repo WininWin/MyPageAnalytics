@@ -21,35 +21,35 @@ FBServices.factory('FBapi', function($http, $q, $window){
 	//     return resolver.promise;
 	// };
 
-	function loopcall(url, arr, counter, checklength){
-		return new Promise(function(resolve, reject) {
+	// function loopcall(url, arr, counter, checklength){
+	// 	return new Promise(function(resolve, reject) {
 
-			$window.setTimeout(
-				function(){
-					if(typeof FB !== 'undefined'){
-						FB.api(url, function(response) {
-							if(response.data.length	!== 0){
-								counter++;
-								arr = arr.concat(response.data);
-								url = response.paging.next;
-								resolve();
-							}
-							else{
-								checklength = false;
-								resolve();
-							}
+	// 		$window.setTimeout(
+	// 			function(){
+	// 				if(typeof FB !== 'undefined'){
+	// 					FB.api(url, function(response) {
+	// 						if(response.data.length	!== 0){
+	// 							counter++;
+	// 							arr = arr.concat(response.data);
+	// 							url = response.paging.next;
+	// 							resolve();
+	// 						}
+	// 						else{
+	// 							checklength = false;
+	// 							resolve();
+	// 						}
 							
-						});
-						}
+	// 					});
+	// 					}
 
-						else{
-							reject(Error('There was a network error.'));
-						}
-				},500)
+	// 					else{
+	// 						reject(Error('There was a network error.'));
+	// 					}
+	// 			},600)
 
-		});
+	// 	});
 
-	}
+	// }
 
 	function feedcall(url){
 
@@ -67,7 +67,7 @@ FBServices.factory('FBapi', function($http, $q, $window){
 						else{
 							reject(Error('There was a network error.'));
 						}
-				},500)
+				},600)
 
 		});
 
@@ -89,7 +89,7 @@ FBServices.factory('FBapi', function($http, $q, $window){
 						else{
 							reject(Error('There was a network error.'));
 						}
-				},500)
+				},600)
 
 		});
 	}
@@ -105,10 +105,10 @@ FBServices.factory('FBapi', function($http, $q, $window){
 
 		getLikes : function(id){
 			return getPostLikes('/' + id + "/likes?fields=total_count&summary=true", id);
-		},
-		getPageCall : function(url, arr, counter, checklength){
-			return	loopcall(url, arr, counter, checklength);
-		},
+		}
+		// getPageCall : function(url, arr, counter, checklength){
+		// 	return	loopcall(url, arr, counter, checklength);
+		// },
 		// promiseWhile : promiseWhile
 	};
 });
