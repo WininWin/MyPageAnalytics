@@ -118,6 +118,7 @@ app.run(['$rootScope', '$window','$state',
        ( https://developers.facebook.com/apps/ )
       localtest : 877976802338807
       hosttest : 783986768404478
+      test3 : 893074757495678
 
       */
 

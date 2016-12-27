@@ -268,7 +268,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
             name : "",
             total_people_in_feed : 0,
             total_posts_in_feed : 0,
-            total_profile_update : 0,  
+            total_profile_update : 0, 
+            person_appear_most : "" 
     };
 
 
@@ -451,6 +452,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                             if(visit_count < $scope.num_names_appear[i].y && response.from.name !== $scope.data_about_me.name){
                               visit_count = $scope.num_names_appear[i].y;
                              $scope.most_visitied_id = response.from.id;
+                             $scope.data_about_me.person_appear_most = response.from.name;
 
                             }
 
