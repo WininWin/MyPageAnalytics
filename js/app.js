@@ -150,6 +150,8 @@ app.run(['$rootScope', '$window','$state',
   });
 
   };
+
+  
 //future use 
 // (function(window, nextTick, process, prefixes, i, p, fnc) {
 //     p = window[process] || (window[process] = {});

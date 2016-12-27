@@ -241,6 +241,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
         };
 
      
+        $scope.word_filter = ['the', 'a', 'of', 'an', 'in', 'on', 'at', 'for', 'to','from','as', 'I', 'you'];
 
       $scope.final_network;
 
@@ -543,7 +544,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
               }
 
               for(var key in message){
-                if(key.length < 10 && message[key] > 1 && key !== " "){
+                if(key.length < 10 && message[key] > 1 && key !== " " && key !== "" && $scope.word_filter.indexOf(key) === -1){
                   $scope.word_data.push({
                   'key' : key,
                   'y' : message[key]
