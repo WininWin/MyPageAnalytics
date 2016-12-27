@@ -286,7 +286,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
           console.log(Error);
         });
 
-        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=300&since=' + $scope.myDate ).then( function(val) {
+        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=500&since=' + $scope.myDate ).then( function(val) {
            $scope.data = val.data;
            // $scope.nextpage = val.paging.next;
            $scope.should_get_mode_data = false; 
