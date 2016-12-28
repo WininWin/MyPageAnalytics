@@ -43,7 +43,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
   function ($rootScope, $state, $scope,$window, $timeout, $http, FBapi) {
 
 
-    //refresh
+    //refresh button
     $scope.refresh = function(){
           init();
     }
@@ -229,7 +229,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
     }, true);
 
   
-      
+
       $scope.data = [];
       $scope.num_names_appear = [];
       $scope.done_p_info = false;
@@ -598,11 +598,9 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
     }
 
-  $window.onload = function(){
-    init();
-  }
-    
- 
+
+   
+   init();
 
 
-}]);
+  }]);

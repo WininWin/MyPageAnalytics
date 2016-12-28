@@ -60,8 +60,9 @@
 
   <body ng-app="mymind">
     <script>
+    //init login
       function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
+    console.log('1.statusChangeCallback');
    
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
@@ -71,10 +72,7 @@
       // Logged into your app and Facebook.
 
       FB.api('/me', function(response) {
-          // $rootScope.user.name = response.name;
-          // console.log(response.name);
-          // console.log($rootScope.user.name);
-
+        
             window.location = "#/main";
 
 
