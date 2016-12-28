@@ -72,22 +72,6 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
         };
 
 
-    //Used word chart
-    // $scope.options_two = {
-    //         chart: {
-    //             type: 'pieChart',
-    //             height: 500,
-    //             x: function(d){return d.key;},
-    //             y: function(d){return d.y;},
-    //             labelThreshold: 0.03,
-    //             showLabels: true,
-    //             duration: 500,
-    //             showLegend: false,
-    //             labelSunbeamLayout: true,
-    //         }
-    //     };
-
-
         //historical number of event in feed chart
         $scope.options_three = {
             chart: {
@@ -191,7 +175,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
     //init function
     function init(){
 
-    
+      console.log($rootScope.token);
 
       //var since = $scope.myDate.getTime();
       //init values
@@ -284,7 +268,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
          FBapi.getGraphApi('/me').then(function(val){
              $scope.data_about_me.name = val.name;
               $rootScope.username = val.name;
-             $scope.$apply();
+             
            
         },function(Error) {
           console.log(Error);
@@ -296,24 +280,6 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
            // $scope.nextpage = val.paging.next;
            $scope.should_get_mode_data = false; 
            
-           //future use 
-           // if($scope.data.length === 3){
-           //      $scope.should_get_mode_data = true;
-           // }
-           // $scope.loop_counter = 0,
-           //    stop = 10;
-
-           //  FBapi.promiseWhile(function() {
-           //      // Condition for stopping
-           //      return ($scope.loop_counter) < stop && ($scope.should_get_mode_data);
-           //  }, function() {
-           //      return FBapi.getPageCall($scope.nextpage, $scope.data,  $scope.loop_counter, $scope.should_get_mode_data);
-           //  }).then(function() {
-           //      // Notice we can chain it because it's a Promise, this will run after completion of the promiseWhile Promise!
-           //      //console.log("Done");
-                
-           //  });
-
 
            if(!$scope.should_get_mode_data){
                  analyze_data($scope.data);
@@ -423,7 +389,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                     
                       
                         $scope.watcher[2] = true;
-                        $scope.$apply();
+                        
                       
                       
                     }
@@ -545,7 +511,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                   $scope.most_visitied_profile = response.data.url;
                   
                    $scope.img_done = true;
-                  $scope.$apply();
+                  
                   
                 });
 
@@ -580,10 +546,10 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                    $scope.watcher[1] = true;
                    $scope.watcher[3] = true;
 
-                $scope.$apply();
+                
               }
                
-                   $scope.$apply();
+                   
                 });
 
 
@@ -599,9 +565,13 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
     }
 
+   $window.setTimeout(function(){
+        init();
+   }, 500);
+       
 
    
-   init();
+  
 
 
   }]);

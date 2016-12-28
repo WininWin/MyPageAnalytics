@@ -67,7 +67,6 @@ $urlRouterProvider.otherwise('/');
 app.run(['$rootScope', '$window','$state',
   function($rootScope, $window, $state) {
 
-     $rootScope.user = {};
 
    function statusChangeCallback(response) {
     console.log('2.statusChangeCallback');
@@ -78,15 +77,9 @@ app.run(['$rootScope', '$window','$state',
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-
-      FB.api('/me', function(response) {
-          $rootScope.username = response.name;
-     
+      // $rootScope.token = response.authResponse.accessToken;
            $state.go('app.main');
-      });
-
-  
-   
+     
 
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -151,15 +144,6 @@ app.run(['$rootScope', '$window','$state',
 
   };
 
-
-//future use 
-// (function(window, nextTick, process, prefixes, i, p, fnc) {
-//     p = window[process] || (window[process] = {});
-//     while (!fnc && i < prefixes.length) {
-//         fnc = window[prefixes[i++] + 'equestAnimationFrame'];
-//     }
-//     p[nextTick] = p[nextTick] || (fnc && fnc.bind(window)) || window.setImmediate || window.setTimeout;
-// })(window, 'nextTick', 'process', 'r webkitR mozR msR oR'.split(' '), 0);
 
   (function(d){
     // load the Facebook javascript SDK
