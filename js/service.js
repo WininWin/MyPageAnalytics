@@ -5,11 +5,11 @@ FBServices.factory('FBapi', function($http, $q, $window, $timeout){
 
 
 
-	function feedcall(url){
-	
+	function feedcall(url, option){
+
 		if(typeof FB !== 'undefined'){
 			var deferred = $q.defer();
-            FB.api(url, function(response) {
+            FB.api(url, 'get', option,function(response) {
                 if (!response || response.error) {
                     deferred.reject('Error occured');
                 } else {
@@ -43,9 +43,9 @@ FBServices.factory('FBapi', function($http, $q, $window, $timeout){
 
 
 	return {
-		getGraphApi : function(url){
+		getGraphApi : function(url, option){
 			
-			return feedcall(url);
+			return feedcall(url, option);
 		},
 
 		getLikes : function(id){

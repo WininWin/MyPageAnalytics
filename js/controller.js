@@ -265,7 +265,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
       $scope.most_visitied_profile ='';
      
 
-         FBapi.getGraphApi('/me').then(function(val){
+         FBapi.getGraphApi('/me', null).then(function(val){
              $scope.data_about_me.name = val.name;
               $rootScope.username = val.name;
              
@@ -273,7 +273,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
         },function(Error) {
           console.log(Error);
         });
-        var get_Data = FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=500&since=' + $scope.myDate.toString() );
+        var get_Data = FBapi.getGraphApi('/me/feed' , {fields:'message,full_picture,story,created_time' , limit : 500, since: $scope.myDate.toString() } );
 
         get_Data.then( function(val) {
            $scope.data = val.data;
@@ -414,7 +414,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                 //get user messages
               for(var i = 0; i < ids.length; i++){
-                FBapi.getGraphApi('/' + ids[i] + '?fields=from,message').then(function(response){
+                FBapi.getGraphApi('/' + ids[i], {fields:'from,message'}).then(function(response){
                  
 
                     if(response.message){
@@ -507,7 +507,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                      $scope.watcher[5] = true;
 
                    
-                FBapi.getGraphApi('/'+ $scope.most_visitied_id + '/picture?width=200&height=200').then(function(response){
+                FBapi.getGraphApi('/'+ $scope.most_visitied_id + '/picture',{width:'200',height:'200'}).then(function(response){
                   $scope.most_visitied_profile = response.data.url;
                   
                    $scope.img_done = true;
@@ -571,7 +571,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
        var gettoken = 0; 
          if(!$rootScope.token){
               console.log("no Token");
-              gettoken = 200;
+              gettoken = 100;
                 FB.getLoginStatus(function(response) {
                 if (response.status === 'connected') {
                 // Logged into your app and Facebook.
