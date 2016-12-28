@@ -187,7 +187,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
     };
 
 
-     $scope.myDate = new Date("2010/01/01");
+     $scope.myDate = new Date("2010-01-01");
     //init function
     function init(){
 
@@ -314,12 +314,10 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                 
            //  });
 
-           $window.setTimeout(function(){
+
            if(!$scope.should_get_mode_data){
                  analyze_data($scope.data);
            }
-
-         },200);
         
            
           },function(Error) {
