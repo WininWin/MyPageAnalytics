@@ -273,7 +273,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
         },function(Error) {
           console.log(Error);
         });
-        var get_Data = FBapi.getGraphApi('/me/feed' , {fields:'message,full_picture,story,created_time' , limit : 500, since: $scope.myDate.toDateString() } );
+        var get_Data = FBapi.getGraphApi('/me/feed' , {fields:'message,full_picture,story,created_time,from' , limit : 500, since: $scope.myDate.toDateString() } );
 
         get_Data.then( function(val) {
            $scope.data = val.data;
@@ -304,7 +304,12 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
             
               var profile_picture_object = [];
 
-
+                var message = {};
+             var peoplecount = 0;
+              $scope.most_visitied_id = 0;
+              var visit_count = 0;
+              var time_count = 0;
+                var message_array = [];
               //get posts id
               for(var i = 0; i < data.length; i++){
 
@@ -337,92 +342,13 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                
                   num_events[date.getTime()] = 1;
                 }
-                
 
-              }
 
-              //update number of events chart
-              for(var key in num_events){
-                var arr = [];
-                arr[0] = parseInt(key);
-                arr[1] =(num_events[key]);
-                $scope.number_of_events[0].values.push(arr);
 
-              }
 
-              $scope.number_of_events[0].values.sort(function(a,b){
-                return a[0] - b[0];
-              });
-
-              for(var t = 0; t <  $scope.number_of_events[0].values.length;t++){
-                if( $scope.number_of_events[0].values[t+1]){
-                  var diff = $scope.number_of_events[0].values[t+1][0]-$scope.number_of_events[0].values[t][0];
-                  if( diff > 2592000000){
-                       $scope.number_of_events[0].values.splice(t+1,0, [ $scope.number_of_events[0].values[t][0]+2592000000, 0]);
-                     
-                   
-                  }  
-              
-                }
-                  
-              }
-
-              //done for getting number of events chart 
-              $scope.watcher[4] = true;
-              console.log("post chart done");
-              
-
-              //get updated profile links 
-              for(var key in $scope.profile_link){
-
-                FBapi.getLikes(key).then(function(response){
-                        
-                    $scope.profile_link[response[1]].likes = response[0].summary.total_count;
-                    profile_picture_object.push($scope.profile_link[response[1]]);
-
-                    if(profile_picture_object.length === profile_update_count){
-                       profile_picture_object.sort(function(a, b) {
-                            return a.likes - b.likes;
-                        });
-
-                      $scope.most_likes_profile = profile_picture_object[profile_picture_object.length-1].link;
+                 if(data[i].message){
                     
-                      
-                        $scope.watcher[2] = true;
-                          console.log("profile gallery done");
-                      
-                      
-                    }
-                    
-                  });
-              }
-
-
-              //update user info
-              $scope.data_about_me.total_posts_in_feed = data.length;
-              $scope.data_about_me.total_profile_update = profile_update_count;
-            
-
-             //postid/likes?fields=total_count&summary =true
-               var message = {};
-             var peoplecount = 0;
-              $scope.most_visitied_id = 0;
-              var visit_count = 0;
-              var time_count = 0;
-                var message_array = [];
-
-
-                //get user messages
-                 console.log("start id call");
-
-              for(var i = 0; i < ids.length; i++){
-
-                FBapi.getGraphApi('/' + ids[i], {fields:'from,message'}).then(function(response){
-                 
-
-                    if(response.message){
-                    
-                       var words_array = response.message.split(" ");
+                       var words_array = data[i].message.split(" ");
 
                       message_array.push(words_array);
                     }
@@ -430,17 +356,17 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                     var already_have = 0;
                   
                     //datas for visited people
-                       for(var i = 0; i < $scope.num_names_appear.length; i++){
-                          if(response.from && $scope.num_names_appear[i].key === response.from.name){
+                       for(var j = 0; j < $scope.num_names_appear.length; j++){
+                          if(data[i].from && $scope.num_names_appear[j].key === data[i].from.name){
 
-                            if(visit_count < $scope.num_names_appear[i].y && response.from.name !== $scope.data_about_me.name){
-                              visit_count = $scope.num_names_appear[i].y;
-                             $scope.most_visitied_id = response.from.id;
-                             $scope.data_about_me.person_appear_most = response.from.name;
+                            if(visit_count < $scope.num_names_appear[j].y && data[i].from.name !== $scope.data_about_me.name){
+                              visit_count = $scope.num_names_appear[j].y;
+                             $scope.most_visitied_id = data[i].from.id;
+                             $scope.data_about_me.person_appear_most = data[i].from.name;
 
                             }
 
-                            $scope.num_names_appear[i].y++;
+                            $scope.num_names_appear[j].y++;
                             already_have = 1;
                             break;
                           }
@@ -448,10 +374,10 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                     
                    
-                    if(!already_have && response.from && response.from.name !== $scope.data_about_me.name){
+                    if(!already_have && data[i].from && data[i].from.name !== $scope.data_about_me.name){
                       peoplecount++;
                       $scope.num_names_appear.push({
-                        key : response.from.name,
+                        key : data[i].from.name,
                         y : 1
                       });
                     }
@@ -460,9 +386,13 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                 
                  time_count++;
 
-                 if(time_count === ids.length){
-                   console.log("get all words " + message_array.length);
-                       console.log("feed network start");
+
+               
+                
+
+              }
+
+               if(time_count === data.length){
                     //make feed network
                     for(var n = 0; n < $scope.num_names_appear.length+1; n++){
 
@@ -503,7 +433,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                     }
 
-                    console.log("feed network done");
+                    
                     
                       //done for feed network
                      $scope.final_network = $scope.feed_network;
@@ -512,14 +442,14 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                    
                 FBapi.getGraphApi('/'+ $scope.most_visitied_id + '/picture',{width:'200',height:'200'}).then(function(response){
                   $scope.most_visitied_profile = response.data.url;
-                   console.log("image call done");
+                   
                    $scope.img_done = true;
                   
                   
                 });
 
 
-                 console.log("word dist start");
+               
                 for(var m = 0; m < message_array.length; m++){
                 for(var n = 0; n < message_array[m].length;n++){
                     if(message[message_array[m][n]]){
@@ -532,7 +462,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               }
 
               //make words data
-               console.log("make word data");
+              
               for(var key in message){
                 if(key.length < 10 && message[key] > 1 && key !== " " && key !== "" && $scope.word_filter.indexOf(key) === -1){
                   $scope.word_data.push({
@@ -547,7 +477,10 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                   return a.y - b.y;
               });
 
-                 console.log("all done");
+                  $scope.data_about_me.total_posts_in_feed = data.length;
+              $scope.data_about_me.total_profile_update = profile_update_count;
+              
+                
                   //done for word cloud, user info, and visited people chart
                     $scope.watcher[0] = true;
                    $scope.watcher[1] = true;
@@ -555,19 +488,64 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                 
               }
-               
-                   
-                });
 
+              //update number of events chart
+              for(var key in num_events){
+                var arr = [];
+                arr[0] = parseInt(key);
+                arr[1] =(num_events[key]);
+                $scope.number_of_events[0].values.push(arr);
 
-
-                
               }
 
+              $scope.number_of_events[0].values.sort(function(a,b){
+                return a[0] - b[0];
+              });
 
-             
+              for(var t = 0; t <  $scope.number_of_events[0].values.length;t++){
+                if( $scope.number_of_events[0].values[t+1]){
+                  var diff = $scope.number_of_events[0].values[t+1][0]-$scope.number_of_events[0].values[t][0];
+                  if( diff > 2592000000){
+                       $scope.number_of_events[0].values.splice(t+1,0, [ $scope.number_of_events[0].values[t][0]+2592000000, 0]);
+                     
+                   
+                  }  
+              
+                }
+                  
+              }
 
-             
+              //done for getting number of events chart 
+              $scope.watcher[4] = true;
+
+              
+
+              //get updated profile links 
+              for(var key in $scope.profile_link){
+
+                FBapi.getLikes(key).then(function(response){
+                        
+                    $scope.profile_link[response[1]].likes = response[0].summary.total_count;
+                    profile_picture_object.push($scope.profile_link[response[1]]);
+
+                    if(profile_picture_object.length === profile_update_count){
+                       profile_picture_object.sort(function(a, b) {
+                            return a.likes - b.likes;
+                        });
+
+                      $scope.most_likes_profile = profile_picture_object[profile_picture_object.length-1].link;
+                    
+                      
+                        $scope.watcher[2] = true;
+                         
+                      
+                      
+                    }
+                    
+                  });
+              }
+
+ 
 
 
     }
