@@ -171,7 +171,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
     };
 
 
-     $scope.myDate = new Date("2010-01-01");
+     $scope.myDate = new Date("2010/01/01");
     //init function
     function init(){
 
@@ -273,7 +273,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
         },function(Error) {
           console.log(Error);
         });
-        var get_Data = FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=500&since=' + $scope.myDate );
+        var get_Data = FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=500&since=' + $scope.myDate.toString() );
 
         get_Data.then( function(val) {
            $scope.data = val.data;
@@ -571,7 +571,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
        var gettoken = 0; 
          if(!$rootScope.token){
               console.log("no Token");
-              gettoken = 100;
+              gettoken = 200;
                 FB.getLoginStatus(function(response) {
                 if (response.status === 'connected') {
                 // Logged into your app and Facebook.
