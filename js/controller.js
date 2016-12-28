@@ -230,7 +230,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
   
 
-      $scope.data = [];
+     // $scope.data = [];
       $scope.num_names_appear = [];
       $scope.done_p_info = false;
       $scope.done_visited = false;
@@ -279,7 +279,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
 
       $scope.most_visitied_profile ='';
-
+     
 
          FBapi.getGraphApi('/me').then(function(val){
              $scope.data_about_me.name = val.name;
@@ -290,8 +290,11 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
           console.log(Error);
         });
 
-        FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=500&since=' + $scope.myDate ).then( function(val) {
-           $scope.data = val.data;
+
+        var get_Data = FBapi.getGraphApi('/me/feed?fields=message,full_picture,story,created_time&limit=500&since=' + $scope.myDate );
+
+        get_Data.then( function(val) {
+          // $scope.data = val.data;
            // $scope.nextpage = val.paging.next;
            $scope.should_get_mode_data = false; 
            
@@ -315,7 +318,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
            
            if(!$scope.should_get_mode_data){
-                 analyze_data($scope.data);
+                 analyze_data(val.data);
            }
         
            

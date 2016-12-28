@@ -80,7 +80,7 @@ app.run(['$rootScope', '$window','$state',
       // Logged into your app and Facebook.
 
       FB.api('/me', function(response) {
-          $rootScope.user.name = response.name;
+          $rootScope.username = response.name;
      
            $state.go('app.main');
       });
