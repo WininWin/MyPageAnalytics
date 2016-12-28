@@ -575,9 +575,9 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                 FB.getLoginStatus(function(response) {
                 if (response.status === 'connected') {
                 // Logged into your app and Facebook.
-                 $rootScope.token = response.authResponse.accessToken;
+                 //$rootScope.token = response.authResponse.accessToken;
                     
-               
+               console.log("connected");
 
               }
                 });
