@@ -1,97 +1,42 @@
 var FBServices = angular.module('FBServices', []);
 
 
-FBServices.factory('FBapi', function($http, $q, $window){
+FBServices.factory('FBapi', function($http, $q, $window, $timeout){
 
-	//var myfeed;
 
-	//future use 
-	// var promiseWhile = function(condition, action) {
-	//     var resolver = Promise.defer();
-
-	//     var loop = function() {
-	//         if (!condition()) return resolver.resolve();
-	//         return Promise.cast(action())
-	//             .then(loop)
-	//             .catch(resolver.reject);
-	//     };
-
-	//     process.nextTick(loop);
-
-	//     return resolver.promise;
-	// };
-
-	// function loopcall(url, arr, counter, checklength){
-	// 	return new Promise(function(resolve, reject) {
-
-	// 		$window.setTimeout(
-	// 			function(){
-	// 				if(typeof FB !== 'undefined'){
-	// 					FB.api(url, function(response) {
-	// 						if(response.data.length	!== 0){
-	// 							counter++;
-	// 							arr = arr.concat(response.data);
-	// 							url = response.paging.next;
-	// 							resolve();
-	// 						}
-	// 						else{
-	// 							checklength = false;
-	// 							resolve();
-	// 						}
-							
-	// 					});
-	// 					}
-
-	// 					else{
-	// 						reject(Error('There was a network error.'));
-	// 					}
-	// 			},600)
-
-	// 	});
-
-	// }
 
 	function feedcall(url){
-
-
-		return new Promise(function(resolve, reject) {
-
-			$window.setTimeout(
-				function(){
-					if(typeof FB !== 'undefined'){
-						FB.api(url, function(response) {
-							resolve(response);
-						});
-						}
-
-						else{
-							reject(Error('There was a network error.'));
-						}
-				},300)
-
-		});
+	
+		if(typeof FB !== 'undefined'){
+			var deferred = $q.defer();
+            FB.api(url, function(response) {
+                if (!response || response.error) {
+                    deferred.reject('Error occured');
+                } else {
+                    deferred.resolve(response);
+                }
+            });
+            return deferred.promise;
+		}
+		
 
 		
 			
 	}
 
 	function getPostLikes(url, id){
-		return new Promise(function(resolve, reject) {
-			$window.setTimeout(
-				function(){
-					if(typeof FB !== 'undefined'){
-						FB.api(url, function(response) {
+		if(typeof FB !== 'undefined'){
+		var deferred = $q.defer();
+            FB.api(url, function(response) {
+                if (!response || response.error) {
+                    deferred.reject('Error occured');
+                } else {
+                    deferred.resolve([response,id]);
+                }
+            });
+            return deferred.promise;
+            }
 
-							resolve([response, id]);
-						});
-						}
-
-						else{
-							reject(Error('There was a network error.'));
-						}
-				},300)
-
-		});
 	}
 
 
