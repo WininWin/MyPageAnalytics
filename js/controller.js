@@ -474,7 +474,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               }
 
               $scope.word_data.sort(function(a,b){
-                  return a.y - b.y;
+                  return a.weight - b.weight;
               });
 
                   $scope.data_about_me.total_posts_in_feed = data.length;
