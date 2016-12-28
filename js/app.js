@@ -122,7 +122,7 @@ app.run(['$rootScope', '$window','$state',
 
       */
 
-      appId: '877976802338807',
+      appId: '783986768404478',
 
       /*
        Set if you want to check the authentication status
