@@ -77,7 +77,7 @@ app.run(['$rootScope', '$window','$state',
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      // $rootScope.token = response.authResponse.accessToken;
+       $rootScope.token = response.authResponse.accessToken;
            $state.go('app.main');
      
 

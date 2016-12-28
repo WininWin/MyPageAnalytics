@@ -175,7 +175,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
     //init function
     function init(){
 
-      console.log($rootScope.token);
+     
 
       //var since = $scope.myDate.getTime();
       //init values
@@ -565,8 +565,30 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
     }
 
+
+
    $window.setTimeout(function(){
-        init();
+       var gettoken = 0; 
+         if(!$rootScope.token){
+              console.log("no Token");
+              gettoken = 100;
+                FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                 $rootScope.token = response.authResponse.accessToken;
+                    
+               
+
+              }
+                });
+             
+          }
+
+        $window.setTimeout(function(){
+           init();
+        }, gettoken);
+
+       
    }, 500);
        
 
