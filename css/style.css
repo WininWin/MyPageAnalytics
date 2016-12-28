@@ -45,3 +45,12 @@ div#topwords{
 	margin-top: 10px;
 	font-weight: bold;
 }
+
+#privacy{
+	width: 700px;
+}
+
+#privacy > div > p{
+	margin-left: 10px;
+	margin-right: 5px;
+}
