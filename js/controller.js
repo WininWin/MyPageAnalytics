@@ -369,7 +369,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
               //done for getting number of events chart 
               $scope.watcher[4] = true;
-
+              console.log("post chart done");
               
 
               //get updated profile links 
@@ -389,7 +389,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                     
                       
                         $scope.watcher[2] = true;
-                        
+                          console.log("profile gallery done");
                       
                       
                     }
@@ -413,7 +413,10 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
 
                 //get user messages
+                 console.log("start id call");
+
               for(var i = 0; i < ids.length; i++){
+
                 FBapi.getGraphApi('/' + ids[i], {fields:'from,message'}).then(function(response){
                  
 
@@ -458,8 +461,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                  time_count++;
 
                  if(time_count === ids.length){
-
-                   
+                   console.log("get all words " + message_array.length);
+                       console.log("feed network start");
                     //make feed network
                     for(var n = 0; n < $scope.num_names_appear.length+1; n++){
 
@@ -500,7 +503,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                     }
 
-                   
+                    console.log("feed network done");
                     
                       //done for feed network
                      $scope.final_network = $scope.feed_network;
@@ -509,12 +512,14 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                    
                 FBapi.getGraphApi('/'+ $scope.most_visitied_id + '/picture',{width:'200',height:'200'}).then(function(response){
                   $scope.most_visitied_profile = response.data.url;
-                  
+                   console.log("image call done");
                    $scope.img_done = true;
                   
                   
                 });
 
+
+                 console.log("word dist start");
                 for(var m = 0; m < message_array.length; m++){
                 for(var n = 0; n < message_array[m].length;n++){
                     if(message[message_array[m][n]]){
@@ -527,6 +532,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               }
 
               //make words data
+               console.log("make word data");
               for(var key in message){
                 if(key.length < 10 && message[key] > 1 && key !== " " && key !== "" && $scope.word_filter.indexOf(key) === -1){
                   $scope.word_data.push({
@@ -541,6 +547,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                   return a.y - b.y;
               });
 
+                 console.log("all done");
                   //done for word cloud, user info, and visited people chart
                     $scope.watcher[0] = true;
                    $scope.watcher[1] = true;
@@ -566,9 +573,10 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
     }
 
 
-
+    //waiting until get fb sdk 
    $window.setTimeout(function(){
        var gettoken = 0; 
+       //if there is no token
          if(!$rootScope.token){
               console.log("no Token");
               gettoken = 100;
@@ -584,6 +592,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
              
           }
 
+          //wait until get token
         $window.setTimeout(function(){
            init();
         }, gettoken);
