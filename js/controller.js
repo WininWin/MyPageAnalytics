@@ -310,6 +310,22 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               var visit_count = 0;
               var time_count = 0;
                 var message_array = [];
+
+                //no data
+                if(data.length === 0){
+                    $scope.watcher[0] = true;
+                   $scope.watcher[1] = true;
+                   $scope.watcher[2] = true;
+                    $scope.watcher[3] = true;
+                   $scope.watcher[4] = true;
+                   $scope.watcher[5] = true;
+                   $scope.nopost = true;
+                   $scope.noword = true;
+                   $scope.noprofile = true;
+                   $scope.img_done = true;
+
+                }
+
               //get posts id
               for(var i = 0; i < data.length; i++){
 
@@ -368,14 +384,16 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                        for(var j = 0; j < $scope.num_names_appear.length; j++){
                           if(data[i].from && $scope.num_names_appear[j].key === data[i].from.name){
 
-                            if(visit_count < $scope.num_names_appear[j].y && data[i].from.name !== $scope.data_about_me.name){
+                            $scope.num_names_appear[j].y++;
+
+                            if(visit_count <= $scope.num_names_appear[j].y && data[i].from.name !== $scope.data_about_me.name){
                               visit_count = $scope.num_names_appear[j].y;
                              $scope.most_visitied_id = data[i].from.id;
                              $scope.data_about_me.person_appear_most = data[i].from.name;
 
                             }
 
-                            $scope.num_names_appear[j].y++;
+                            
                             already_have = 1;
                             break;
                           }
@@ -389,6 +407,11 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                         key : data[i].from.name,
                         y : 1
                       });
+                    }
+
+                    //
+                    if(!$scope.most_visitied_id && data[i].from.name !== $scope.data_about_me.name){
+                     $scope.most_visitied_id = data[i].from.id;
                     }
 
                     $scope.data_about_me.total_people_in_feed = peoplecount;
@@ -482,11 +505,17 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                 
               }
 
+
               $scope.word_data.sort(function(a,b){
                   return a.weight - b.weight;
               });
 
-                  $scope.data_about_me.total_posts_in_feed = data.length;
+             
+              if($scope.word_data.length === 0){
+                $scope.noword = true;
+              }
+
+              $scope.data_about_me.total_posts_in_feed = data.length;
               $scope.data_about_me.total_profile_update = profile_update_count;
               
                 
@@ -530,7 +559,9 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               
 
               //get updated profile links 
-              for(var key in $scope.profile_link){
+
+              if( $scope.data_about_me.total_profile_update){
+                for(var key in $scope.profile_link){
 
                 FBapi.getLikes(key).then(function(response){
                         
@@ -555,6 +586,13 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               }
 
  
+              }
+              else{
+                   $scope.watcher[2] = true;
+                   $scope.noprofile = true;
+                   $scope.img_done = true;
+              }
+              
 
 
     }

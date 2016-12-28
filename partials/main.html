@@ -96,7 +96,7 @@
       <div ng-show="!done_profile"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
 
       <div ng-if="done_profile" class="fade">
-
+            <div layout="row" layout-align="center center" ng-if="noprofile">No profile update since {{myDate}}</div>
         
            <md-card ng-repeat = "value in profile_link" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
         <md-card-title>
@@ -133,6 +133,7 @@
           </div>
             
         <div layout="row" layout-align="center center" id = "topwords">Word Cloud</div>
+         <div layout="row" layout-align="center center" ng-if="noword">No word cloud available</div>
        <div layout="row">
         <div flex="100">
            <jqcloud words="word_data"  height = "500" steps="7"></jqcloud>
@@ -158,11 +159,10 @@
         <div layout="row" layout-align="center center">
           Number of posts by dates
         </div>
-
         <div layout="row">
         <div flex="100">
           <nvd3 options="options_three" data="number_of_events" ></nvd3>
-
+          
         </div>
            </div>
       </div>
