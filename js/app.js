@@ -1,4 +1,4 @@
-var app = angular.module('mymind',['appControllers','FBServices','ui.router', 'ngMaterial','nvd3']);
+var app = angular.module('mymind',['appControllers','FBServices','ui.router', 'ngMaterial','nvd3', 'angular-jqcloud']);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
    $mdThemingProvider.theme('default')
@@ -118,11 +118,11 @@ app.run(['$rootScope', '$window','$state',
        ( https://developers.facebook.com/apps/ )
       localtest : 877976802338807
       hosttest : 783986768404478
-      test3 : 893074757495678
+      test3 : 893074757495678 for remove use less permission
 
       */
 
-      appId: '783986768404478',
+      appId: '877976802338807',
 
       /*
        Set if you want to check the authentication status
@@ -151,7 +151,7 @@ app.run(['$rootScope', '$window','$state',
 
   };
 
-  
+
 //future use 
 // (function(window, nextTick, process, prefixes, i, p, fnc) {
 //     p = window[process] || (window[process] = {});

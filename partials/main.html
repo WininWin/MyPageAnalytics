@@ -121,19 +121,24 @@
       <div layout="row" layout-align="center center" class="md-subhead">{{data_name[3]}}</div>
       <div layout="row" layout-align="center center" ng-show="!done_word"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
 
-      <div ng-if = "done_word">
+      <div layout="column" ng-if = "done_word">
 
       
           <div layout="row"  layout-align="center center">Words that you and other people used in your feed more than once</div>
           <div layout="row" layout-align="center center" id = "topwords">Top Five words</div>
           <div layout="row" layout-align="space-around center"> 
                 <div ng-repeat = "i in [1,2,3,4,5]">
-                  {{i}}.{{word_data[word_data.length-i].key}}
+                  {{i}}.{{word_data[word_data.length-i].text}}
                 </div>
           </div>
             
-       
-          <nvd3 options="options_two" data="word_data"></nvd3>
+        <div layout="row" layout-align="center center" id = "topwords">Word Cloud</div>
+       <div layout="row">
+        <div flex="100">
+           <jqcloud words="word_data"  height = "500" steps="7"></jqcloud>
+        </div>
+        
+        </div>
 
       </div>
   </div>

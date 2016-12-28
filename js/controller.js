@@ -39,8 +39,8 @@ appControllers.controller('FooterCtrl', ['$rootScope', '$state','$window', '$sco
 
 
 
-appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeout' ,'$http','FBapi',
-  function ($rootScope, $state, $scope, $timeout, $http, FBapi) {
+appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window', '$timeout' ,'$http','FBapi',
+  function ($rootScope, $state, $scope,$window, $timeout, $http, FBapi) {
 
 
     //refresh
@@ -54,38 +54,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
   
 
    
-    //loading watcher
-   $scope.$watch('watcher', function(newvalue, oldvalue) {
-        // some value in the array has changed 
-       
-        if(newvalue[0]){
-               $scope.done_p_info = true;
-        }
-        if(newvalue[1]){
-              $scope.done_visited = true;
-   
-        }
-        if(newvalue[2]){
-              $scope.done_profile = true;
-  
-        }
-        if(newvalue[3]){
-              $scope.done_word = true;
-  
-        }
-
-        if(newvalue[4]){
-             $scope.done_post = true;
-   
-        }
-        if(newvalue[5]){
-            $scope.done_network = true;
     
-        }
-
-    }, true);
-
-  
  
     //visited people chart
     $scope.options_one = {
@@ -104,19 +73,19 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
 
     //Used word chart
-    $scope.options_two = {
-            chart: {
-                type: 'pieChart',
-                height: 500,
-                x: function(d){return d.key;},
-                y: function(d){return d.y;},
-                labelThreshold: 0.03,
-                showLabels: true,
-                duration: 500,
-                showLegend: false,
-                labelSunbeamLayout: true,
-            }
-        };
+    // $scope.options_two = {
+    //         chart: {
+    //             type: 'pieChart',
+    //             height: 500,
+    //             x: function(d){return d.key;},
+    //             y: function(d){return d.y;},
+    //             labelThreshold: 0.03,
+    //             showLabels: true,
+    //             duration: 500,
+    //             showLegend: false,
+    //             labelSunbeamLayout: true,
+    //         }
+    //     };
 
 
         //historical number of event in feed chart
@@ -165,7 +134,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
 
         //feed_network
-        var color = d3.scale.category20()
+        var color = d3.scale.category20();
       $scope.options_four = {
         chart: {
             type: 'forceDirectedGraph',
@@ -227,6 +196,40 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
       //var since = $scope.myDate.getTime();
       //init values
       $scope.watcher = [false,false,false,false,false,false];
+
+      //loading watcher
+   $scope.$watch('watcher', function(newvalue, oldvalue) {
+        // some value in the array has changed 
+       
+        if(newvalue[0]){
+               $scope.done_p_info = true;
+        }
+        if(newvalue[1]){
+              $scope.done_visited = true;
+   
+        }
+        if(newvalue[2]){
+              $scope.done_profile = true;
+  
+        }
+        if(newvalue[3]){
+              $scope.done_word = true;
+  
+        }
+
+        if(newvalue[4]){
+             $scope.done_post = true;
+   
+        }
+        if(newvalue[5]){
+            $scope.done_network = true;
+    
+        }
+
+    }, true);
+
+  
+      
       $scope.data = [];
       $scope.num_names_appear = [];
       $scope.done_p_info = false;
@@ -335,7 +338,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
               var profile_picture_object = [];
 
 
-
+              //get posts id
               for(var i = 0; i < data.length; i++){
 
                  var a = (data[i].created_time).split(/[^0-9]/);
@@ -358,6 +361,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                   
                 }
 
+                //get number of events
                 if(num_events[date.getTime()]){
 
                   num_events[date.getTime()]++;
@@ -370,6 +374,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
               }
 
+              //update number of events chart
               for(var key in num_events){
                 var arr = [];
                 arr[0] = parseInt(key);
@@ -395,9 +400,12 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                   
               }
 
+              //done for getting number of events chart 
               $scope.watcher[4] = true;
 
-           
+              
+
+              //get updated profile links 
               for(var key in $scope.profile_link){
 
                 FBapi.getLikes(key).then(function(response){
@@ -422,6 +430,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                   });
               }
 
+
+              //update user info
               $scope.data_about_me.total_posts_in_feed = data.length;
               $scope.data_about_me.total_profile_update = profile_update_count;
             
@@ -434,6 +444,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
               var time_count = 0;
                 var message_array = [];
 
+
+                //get user messages
               for(var i = 0; i < ids.length; i++){
                 FBapi.getGraphApi('/' + ids[i] + '?fields=from,message').then(function(response){
                  
@@ -447,6 +459,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                   
                     var already_have = 0;
                   
+                    //datas for visited people
                        for(var i = 0; i < $scope.num_names_appear.length; i++){
                           if(response.from && $scope.num_names_appear[i].key === response.from.name){
 
@@ -476,10 +489,11 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                     $scope.data_about_me.total_people_in_feed = peoplecount;
                 
                  time_count++;
+
                  if(time_count === ids.length){
 
                    
-
+                    //make feed network
                     for(var n = 0; n < $scope.num_names_appear.length+1; n++){
 
                         if(n===0){
@@ -491,6 +505,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
                         }
 
+
+                        //grouping
                         var group = 0;
                         if($scope.num_names_appear[n-1].y > 12){
                               group = 1;
@@ -519,7 +535,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
                    
                     
-          
+                      //done for feed network
                      $scope.final_network = $scope.feed_network;
                      $scope.watcher[5] = true;
 
@@ -543,11 +559,12 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                 }
               }
 
+              //make words data
               for(var key in message){
                 if(key.length < 10 && message[key] > 1 && key !== " " && key !== "" && $scope.word_filter.indexOf(key) === -1){
                   $scope.word_data.push({
-                  'key' : key,
-                  'y' : message[key]
+                  text : key,
+                  weight : parseInt(message[key])
                    });
                 }
                 
@@ -557,14 +574,14 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
                   return a.y - b.y;
               });
 
-
+                  //done for word cloud, user info, and visited people chart
                     $scope.watcher[0] = true;
                    $scope.watcher[1] = true;
                    $scope.watcher[3] = true;
 
                 $scope.$apply();
               }
-                 //  $scope.done = true;
+               
                    $scope.$apply();
                 });
 
@@ -581,8 +598,10 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope', '$timeo
 
     }
 
-  
+  $window.onload = function(){
     init();
+  }
+    
  
 
 
