@@ -18,7 +18,7 @@
   		<div layout="row"  layout-align="center center" class="md-subhead">{{data_name[0]}}</div>
    		<div ng-show="!done_p_info"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
 
-      <div ng-if="done_p_info">
+      <div ng-if="done_p_info" class="fade">
 
         <div id = "info" layout="column" ng-model="data_about_me">
           <div>Name : {{data_about_me.name}}</div>
@@ -76,7 +76,7 @@
    		<div layout="row"  layout-align="center center" class="md-subhead">{{data_name[1]}}</div>
    		<div layout="row"  layout-align="center center" ng-show="!done_visited"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
 
-      <div ng-if="done_visited">
+      <div ng-if="done_visited" class="fade">
         <div layout="row"  layout-align="center center">People who appears in your feed</div>
         <div layout="row"  layout-align="center center">Number means the number of feeds by the person</div>
 
@@ -95,7 +95,7 @@
       <div class="md-subhead">{{data_name[2]}}</div>
       <div ng-show="!done_profile"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
 
-      <div ng-if="done_profile">
+      <div ng-if="done_profile" class="fade">
 
         
            <md-card ng-repeat = "value in profile_link" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
@@ -121,7 +121,7 @@
       <div layout="row" layout-align="center center" class="md-subhead">{{data_name[3]}}</div>
       <div layout="row" layout-align="center center" ng-show="!done_word"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
 
-      <div layout="column" ng-if = "done_word">
+      <div layout="column" ng-if = "done_word" class="fade">
 
       
           <div layout="row"  layout-align="center center">Words that you and other people used in your feed more than once</div>
@@ -153,7 +153,7 @@
       <div layout="row" layout-align="center center" class="md-subhead">{{data_name[4]}}</div>
       <div layout="row" layout-align="center center" ng-show="!done_post"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
     
-      <div layout="column" ng-if="done_post">
+      <div layout="column" ng-if="done_post" class="fade">
 
         <div layout="row" layout-align="center center">
           Number of posts by dates
@@ -177,7 +177,7 @@
       <div layout="row" layout-align="center center" class="md-subhead">{{data_name[5]}}</div>
       <div layout="row" layout-align="center center" ng-show="!done_network"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
 
-      <div layout="row" ng-if="done_network">
+      <div layout="row" ng-if="done_network" class="fade">
          <div flex="100">
         <nvd3 options="options_four" data="final_network" class="with-3d-shadow with-transitions"></nvd3>
        
