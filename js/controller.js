@@ -273,7 +273,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
         },function(Error) {
           console.log(Error);
         });
-        var get_Data = FBapi.getGraphApi('/me/feed' , {fields:'message,full_picture,story,created_time' , limit : 500, since: $scope.myDate.toString() } );
+        var get_Data = FBapi.getGraphApi('/me/feed' , {fields:'message,full_picture,story,created_time' , limit : 500, since: $scope.myDate.toDateString() } );
 
         get_Data.then( function(val) {
            $scope.data = val.data;
