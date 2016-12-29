@@ -5,16 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="watawetewt">
+    <meta name="description" content="">
     <meta name="author" content="Yeonsung Kim">
  
-    <title>Facebook Analytics</title>
+    <title>My Page Analytics</title>
 
     <meta property="og:url" content="https://wininwin.github.io/MyFeedStat/" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="MyFeedStat" />
-  <meta property="og:description" content="Description" />
-  <meta property="og:image" content="https://wininwin.github.io/MyFeedStat/img/feed_network.png" />
+  <meta property="og:title" content="My Page Analytics" />
+  <meta property="og:description" content="Find words that you and other people used, or Find people who wrote posts or share posts. It shows the statistical information about your personal page. The site retrieves your personal page data from Facebook graph api, and tehn it analyzes the data.It gets up to 500 posts which uploaded since the given input date." />
+  <meta property="og:image" content="https://wininwin.github.io/MyPageAnalytics/img/appicon.png" />
 
     <!-- Latest compiled and minified CSS -->
 
@@ -54,7 +54,7 @@
     <script src="./build/app.js"></script>
   </head>
 
-  <body ng-app="mymind">
+  <body ng-app="MyPageAnalytics">
     <script>
     //init login
       function statusChangeCallback(response) {

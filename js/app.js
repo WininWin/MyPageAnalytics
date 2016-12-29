@@ -1,4 +1,4 @@
-var app = angular.module('mymind',['appControllers','FBServices','ui.router', 'ngMaterial','nvd3', 'angular-jqcloud','ngAnimate']);
+var app = angular.module('MyPageAnalytics',['appControllers','FBServices','ui.router', 'ngMaterial','nvd3', 'angular-jqcloud','ngAnimate']);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
    $mdThemingProvider.theme('default')

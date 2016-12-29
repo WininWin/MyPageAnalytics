@@ -1,26 +1,42 @@
 <div ng-controller='LoginCtrl'>
-  <div layout="column" layout-align="center center">
-  
+  <div id ="desc" layout="column" layout-align="center center">
+    
       <div class="md-subhead">
         
-        Find words that you use, or Find people who were in your feed. 
-              
+        Find words that you and other people used, or Find people who wrote posts or share posts. 
+               It shows the statistical information about your personal page.
       </div>
       
-      <div class="md-subhead">
-        It shows the statistical information about your personal page.
+     
+       <div class="md-subhead">
+        The site retrieves your personal page data from Facebook graph api, and then it analyzes the data.
+        It gets up to 500 posts which uploaded since the given input date. 
       </div>
 
  
 
 
   </div>
+  
+   
 
   <div class="loginbutton" layout="row" layout-align="center center">
      <fb:login-button scope="public_profile,email, user_posts" data-size="xlarge" onlogin="checkLoginState();"></fb:login-button>         
   </div>
 
+ <div id="exampleTitle" layout="row" layout-align="center center"  class="md-title">
+        Example
+    </div>
+        
+  <div layout="row" layout-xs="column" layout-sm="column" layout-align="space-around center" >
+      <div id="example">
+        <img id="example-img-box" src="./img/exampleOne" >
+      </div>
 
+      <div id="example">
+         <img id="example-img-box" src="./img/exampleTwo" >
+      </div>
+  </div>
   
 </div>
 

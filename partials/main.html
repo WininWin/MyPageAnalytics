@@ -22,8 +22,8 @@
 
         <div id = "info" layout="column" ng-model="data_about_me">
           <div>Name : {{data_about_me.name}}</div>
-          <div>Total posts in feed : {{data_about_me.total_posts_in_feed}}</div>
-          <div>Total people in feed : {{data_about_me.total_people_in_feed}}</div>
+          <div>Total posts in your page : {{data_about_me.total_posts_in_feed}}</div>
+          <div>Total people in your page : {{data_about_me.total_people_in_feed}}</div>
           <div>Number of profile update : {{data_about_me.total_profile_update}}</div>
           <div>Person who appears most : {{data_about_me.person_appear_most}}</div>
           <div layout="row" layout-align="space-around center"  layout-xs="column">
@@ -77,8 +77,8 @@
    		<div layout="row"  layout-align="center center" ng-show="!done_visited"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
 
       <div ng-if="done_visited" class="fade">
-        <div layout="row"  layout-align="center center">People who appears in your feed</div>
-        <div layout="row"  layout-align="center center">Number means the number of feeds by the person</div>
+        <div layout="row"  layout-align="center center">People who appears in your page</div>
+        <div layout="row"  layout-align="center center">Number means the number of posts by the person</div>
 
         <nvd3 options="options_one" data="num_names_appear" ></nvd3>
 
@@ -124,7 +124,7 @@
       <div layout="column" ng-if = "done_word" class="fade">
 
       
-          <div layout="row"  layout-align="center center">Words that you and other people used in your feed more than once</div>
+          <div layout="row"  layout-align="center center">Words that you and other people used in your page more than once</div>
           <div layout="row" layout-align="center center" id = "topwords">Top Five words</div>
           <div layout="row" layout-align="space-around center"> 
                 <div ng-repeat = "i in [1,2,3,4,5]">
@@ -175,9 +175,13 @@
   <div layout="row" layout-xs="column" layout-sm="column" >
  <div class = "databox" layout="column" layout-align="start none" flex>
       <div layout="row" layout-align="center center" class="md-subhead">{{data_name[5]}}</div>
+      
       <div layout="row" layout-align="center center" ng-show="!done_network"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></i></div>
-
+      <div ng-if="done_network" layout="row" layout-align="center center">
+         Group 1 : More than 10 posts, Group 2 : 7~10, Group 3 : 4~6, Group 4 : 0~3 
+       </div>
       <div layout="row" ng-if="done_network" class="fade">
+
          <div flex="100">
         <nvd3 options="options_four" data="final_network" class="with-3d-shadow with-transitions"></nvd3>
        

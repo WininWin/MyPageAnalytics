@@ -440,13 +440,13 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                         //grouping
                         var group = 0;
-                        if($scope.num_names_appear[n-1].y > 12){
+                        if($scope.num_names_appear[n-1].y > 10){
                               group = 1;
                         }
-                        else if($scope.num_names_appear[n-1].y <= 12 && $scope.num_names_appear[n-1].y > 8){
+                        else if($scope.num_names_appear[n-1].y <= 10 && $scope.num_names_appear[n-1].y > 6){
                             group = 2;
                         }
-                        else if($scope.num_names_appear[n-1].y <= 8 && $scope.num_names_appear[n-1].y > 4){
+                        else if($scope.num_names_appear[n-1].y <= 6 && $scope.num_names_appear[n-1].y > 3){
                             gorup = 3;
                         }
                         else{
