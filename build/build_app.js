@@ -110,10 +110,10 @@ app.run(['$rootScope', '$window','$state',
       localtest : 877976802338807
       hosttest : 783986768404478
       test3 : 893074757495678 for remove use less permission
-
+      product : 780261085443713
       */
 
-      appId: '783986768404478',
+      appId: '780261085443713',
 
       /*
        Set if you want to check the authentication status
