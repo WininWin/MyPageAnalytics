@@ -330,7 +330,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               for(var i = 0; i < data.length; i++){
 
                  var a = (data[i].created_time).split(/[^0-9]/);
-                 var date = new Date(a[0],a[1]-1,a[2]);
+                 var date = new Date(a[0],a[1],a[2]);
                
 
 
