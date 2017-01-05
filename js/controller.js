@@ -228,7 +228,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
         };
 
      
-        $scope.word_filter = ['the', 'a', 'of', 'an', 'in', 'on', 'at', 'for', 'to','from','as', 'I', 'you'];
+        $scope.word_filter = ['the', 'a', 'of', 'an', 'in', 'on', 'at', 'for', 'to','from','as', 'I', 'you', 'my','and'];
 
       $scope.final_network;
 
