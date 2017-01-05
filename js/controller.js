@@ -294,6 +294,23 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
       
     }
 
+    function distribute_group(feednetwork, group_num, group_lead,people_array, index){
+          feednetwork.nodes.push({
+                              "name" : people_array[index-1].key,
+                              "group" : group_num
+                          });
+        if(group_lead){
+            feednetwork.links.push(
+                            {"source":parseInt(index),"target":group_lead,"value": parseInt(people_array[index-1].y)}
+                             );
+        }
+        else{
+            feednetwork.links.push(
+                            {"source":parseInt(index),"target":0,"value": parseInt(people_array[index-1].y)}
+                             );
+        }
+    }
+
     function analyze_data(data){
 
               var ids = [];
@@ -306,7 +323,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                 var message = {};
              var peoplecount = 0;
-              $scope.most_visitied_id = 0;
+              $scope.most_visited_id = 0;
               var visit_count = 0;
               var time_count = 0;
                 var message_array = [];
@@ -388,7 +405,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                             if(visit_count <= $scope.num_names_appear[j].y && data[i].from.name !== $scope.data_about_me.name){
                               visit_count = $scope.num_names_appear[j].y;
-                             $scope.most_visitied_id = data[i].from.id;
+                             $scope.most_visited_id = data[i].from.id;
                              $scope.data_about_me.person_appear_most = data[i].from.name;
 
                             }
@@ -410,8 +427,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                     }
 
                     //
-                    if(!$scope.most_visitied_id && data[i].from.name !== $scope.data_about_me.name){
-                     $scope.most_visitied_id = data[i].from.id;
+                    if(!$scope.most_visited_id && data[i].from.name !== $scope.data_about_me.name){
+                     $scope.most_visited_id = data[i].from.id;
                     }
 
                     $scope.data_about_me.total_people_in_feed = peoplecount;
@@ -419,11 +436,18 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                  time_count++;
 
 
-               
-                
-
               }
 
+              $scope.num_names_appear.sort(function(a,b){
+                return a.y - b.y;
+              });
+              $scope.num_names_appear.reverse();
+
+              var g1_lead;
+              var g2_lead;
+              var g3_lead;
+              var g4_lead;
+              
                if(time_count === data.length){
                     //make feed network
                     for(var n = 0; n < $scope.num_names_appear.length+1; n++){
@@ -433,35 +457,43 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                               "name" : $scope.data_about_me.name,
                               "group" : 0
                             });
-                           continue;
-
+                           
                         }
 
+                        else{
 
                         //grouping
                         var group = 0;
                         if($scope.num_names_appear[n-1].y > 10){
                               group = 1;
+                              distribute_group($scope.feed_network, group, g1_lead, $scope.num_names_appear, n);
+                              if(!g1_lead){
+                                g1_lead = n;  
+                              }
                         }
                         else if($scope.num_names_appear[n-1].y <= 10 && $scope.num_names_appear[n-1].y > 6){
                             group = 2;
+                            distribute_group($scope.feed_network, group, g2_lead, $scope.num_names_appear, n);
+                             if(!g2_lead){
+                              g2_lead = n;
+                            }
                         }
                         else if($scope.num_names_appear[n-1].y <= 6 && $scope.num_names_appear[n-1].y > 3){
-                            gorup = 3;
+                            gorup = 3;                            
+                            distribute_group($scope.feed_network, group, g3_lead, $scope.num_names_appear, n);
+                            if(!g3_lead){
+                              g3_lead = n;
+                            }
                         }
                         else{
                             group = 4;
+                            distribute_group($scope.feed_network, group, g4_lead, $scope.num_names_appear, n);
+                            if(!g4_lead){
+                              g4_lead = n;
+                            }
+                        }                        
+
                         }
-
-
-                          $scope.feed_network.nodes.push({
-                              "name" : $scope.num_names_appear[n-1].key,
-                              "group" : group
-                          });
-
-                          $scope.feed_network.links.push(
-                            {"source":parseInt(n),"target":0,"value": parseInt($scope.num_names_appear[n-1].y)}
-                          );
 
                     }
 
@@ -472,7 +504,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                      $scope.watcher[5] = true;
 
                    
-                FBapi.getGraphApi('/'+ $scope.most_visitied_id + '/picture',{width:'200',height:'200'}).then(function(response){
+                FBapi.getGraphApi('/'+ $scope.most_visited_id + '/picture',{width:'200',height:'200'}).then(function(response){
                   $scope.most_visitied_profile = response.data.url;
                    
                    $scope.img_done = true;
