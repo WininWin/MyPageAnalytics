@@ -335,7 +335,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
 
                 ids[i] = data[i].id; 
-                if(data[i].story === ($scope.data_about_me.name + " updated his profile picture.")){
+                if(data[i].story === ($scope.data_about_me.name + " updated his profile picture.") || data[i].story === ($scope.data_about_me.name + " updated her profile picture.")){
                   profile_update_count++;
                 
                   $scope.profile_link[data[i].id] = {};
