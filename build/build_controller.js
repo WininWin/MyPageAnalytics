@@ -205,16 +205,11 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                               "name" : people_array[index].key,
                               "group" : group_num
                           });
-        if(group_lead){
-            feednetwork.links.push(
-                            {"source":group_lead,"target":index+1,"value": people_array[index].y}
-                             );
-        }
-        else{
+        
             feednetwork.links.push(
                             {"source": 0,"target":index+1,"value": people_array[index].y}
                              );
-        }
+        
     } // dist group
 
 
