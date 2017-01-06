@@ -426,6 +426,9 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                         //remove next lines
                         filtered = filtered.replace(/\r?\n|\r/g, ' ');
                         
+                        //lower case
+                        filtered = filtered.toLowerCase();
+
                        var words_array = filtered.split(" ");
 
                       message_array.push(words_array);
@@ -491,7 +494,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                     for(var n = 0; n < $scope.num_names_appear.length; n++){
 
                         //grouping
-                        var group = 0;
+                        var group;
                         if($scope.num_names_appear[n].y > 10){
                               group = 1;
                               distribute_group($scope.feed_network, group, g1_lead, $scope.num_names_appear, n);
