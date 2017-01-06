@@ -655,7 +655,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
         }, gettoken);
 
        
-   }, 500);
+   }, 600);
        
 
    
