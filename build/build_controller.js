@@ -358,7 +358,11 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                   $scope.profile_link[data[i].id] = {};
                   $scope.profile_link[data[i].id].id = data[i].id;
                    $scope.profile_link[data[i].id].likes = 0;
-                    $scope.profile_link[data[i].id].link = data[i].picture;
+
+                   if(data[i].picture){
+                      $scope.profile_link[data[i].id].link = data[i].picture;
+                   }
+                  
                    
                    
                     var shortdate = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
@@ -448,37 +452,34 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               var g3_lead;
               var g4_lead;
               
-               if(time_count === data.length){
-                    //make feed network
-                    for(var n = 0; n < $scope.num_names_appear.length+1; n++){
-
-                        if(n===0){
-                           $scope.feed_network.nodes.push({
+               $scope.feed_network.nodes.push({
                               "name" : $scope.data_about_me.name,
                               "group" : 0
-                            });
-                           
-                        }
+                });
 
-                        else{
+               if(time_count === data.length){
+                    //make feed network
+                    for(var n = 0; n < $scope.num_names_appear.length; n++){
+
+                     
 
                         //grouping
                         var group = 0;
-                        if($scope.num_names_appear[n-1].y > 10){
+                        if($scope.num_names_appear[n].y > 10){
                               group = 1;
                               distribute_group($scope.feed_network, group, g1_lead, $scope.num_names_appear, n);
                               if(!g1_lead){
                                 g1_lead = n;  
                               }
                         }
-                        else if($scope.num_names_appear[n-1].y <= 10 && $scope.num_names_appear[n-1].y > 6){
+                        else if($scope.num_names_appear[n].y <= 10 && $scope.num_names_appear[n].y > 6){
                             group = 2;
                             distribute_group($scope.feed_network, group, g2_lead, $scope.num_names_appear, n);
                              if(!g2_lead){
                               g2_lead = n;
                             }
                         }
-                        else if($scope.num_names_appear[n-1].y <= 6 && $scope.num_names_appear[n-1].y > 3){
+                        else if($scope.num_names_appear[n].y <= 6 && $scope.num_names_appear[n].y > 3){
                             gorup = 3;                            
                             distribute_group($scope.feed_network, group, g3_lead, $scope.num_names_appear, n);
                             if(!g3_lead){
@@ -495,7 +496,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                         }
 
-                    }
+                    
 
                     
                     
@@ -528,7 +529,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               //make words data
               
               for(var key in message){
-                if(key.length < 10 && message[key] > 1 && key !== " " && key !== "" && $scope.word_filter.indexOf(key) === -1){
+                if(key.length < 10 && key.length > 2 && message[key] > 1 && key !== " " && key !== "" && $scope.word_filter.indexOf(key) === -1){
                   $scope.word_data.push({
                   text : key,
                   weight : parseInt(message[key])
@@ -597,7 +598,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                 FBapi.getLikes(key).then(function(response){
                         
-                    $scope.profile_link[response[1]].likes = response[0].summary.total_count;
+                  if(response && response[0] && response[1] && $scope.profile_link[response[1]]){
+                     $scope.profile_link[response[1]].likes = response[0].summary.total_count;
                     profile_picture_object.push($scope.profile_link[response[1]]);
 
                     if(profile_picture_object.length === profile_update_count){
@@ -607,8 +609,10 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
                       $scope.most_likes_profile = profile_picture_object[profile_picture_object.length-1].link;
                     
+                  }
+                   
                       
-                        $scope.watcher[2] = true;
+                      
                          
                       
                       
@@ -617,7 +621,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                   });
               }
 
- 
+                    $scope.watcher[2] = true;
               }
               else{
                    $scope.watcher[2] = true;
