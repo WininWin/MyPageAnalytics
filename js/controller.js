@@ -296,17 +296,17 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
     function distribute_group(feednetwork, group_num, group_lead,people_array, index){
           feednetwork.nodes.push({
-                              "name" : people_array[index-1].key,
+                              "name" : people_array[index].key,
                               "group" : group_num
                           });
         if(group_lead){
             feednetwork.links.push(
-                            {"source":parseInt(index),"target":group_lead,"value": parseInt(people_array[index-1].y)}
+                            {"source":parseInt(index),"target":group_lead,"value": parseInt(people_array[index].y)}
                              );
         }
         else{
             feednetwork.links.push(
-                            {"source":parseInt(index),"target":0,"value": parseInt(people_array[index-1].y)}
+                            {"source":parseInt(index),"target":0,"value": parseInt(people_array[index].y)}
                              );
         }
     }
