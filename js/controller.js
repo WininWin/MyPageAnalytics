@@ -207,12 +207,12 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                           });
         if(group_lead){
             feednetwork.links.push(
-                            {"source":group_lead,"target":parseInt(index),"value": parseInt(people_array[index].y)}
+                            {"source":group_lead,"target":index,"value": people_array[index].y}
                              );
         }
         else{
             feednetwork.links.push(
-                            {"source": 0,"target":parseInt(index),"value": parseInt(people_array[index].y)}
+                            {"source": 0,"target":index,"value": people_array[index].y}
                              );
         }
     } // dist group
