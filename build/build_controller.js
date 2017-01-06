@@ -485,7 +485,6 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                     var g2_lead;
                     var g3_lead;
                     var g4_lead;
-                    console.log($scope.num_names_appear);
                      $scope.feed_network.nodes.push({
                           "name" : $scope.data_about_me.name,
                           "group" : 0
@@ -527,7 +526,6 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                         }
 
                     
-                        console.log($scope.feed_network);
                     
                     
                       //done for feed network
