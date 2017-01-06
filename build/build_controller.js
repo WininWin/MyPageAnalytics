@@ -273,7 +273,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
         },function(Error) {
           console.log(Error);
         });
-        var get_Data = FBapi.getGraphApi('/me/feed' , {fields:'message,full_picture,story,created_time,from' , limit : 500, since: $scope.myDate.toDateString() } );
+        var get_Data = FBapi.getGraphApi('/me/feed' , {fields:'message,story,created_time,from,picture' , limit : 500, since: $scope.myDate.toDateString() } );
 
         get_Data.then( function(val) {
            $scope.data = val.data;
@@ -358,7 +358,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                   $scope.profile_link[data[i].id] = {};
                   $scope.profile_link[data[i].id].id = data[i].id;
                    $scope.profile_link[data[i].id].likes = 0;
-                    $scope.profile_link[data[i].id].link = data[i].full_picture;
+                    $scope.profile_link[data[i].id].link = data[i].picture;
                    
                    
                     var shortdate = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
