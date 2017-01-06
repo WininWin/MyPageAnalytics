@@ -212,7 +212,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
         }
         else{
             feednetwork.links.push(
-                            {"source":parseInt(index),"target":0,"value": parseInt(people_array[index].y)}
+                            {"source":people_array[index].key,"target":$scope.data_about_me.name,"value": parseInt(people_array[index].y)}
                              );
         }
     } // dist group
@@ -487,8 +487,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                     var g4_lead;
                     
                      $scope.feed_network.nodes.push({
-                                    "name" : $scope.data_about_me.name,
-                                    "group" : 0
+                          "name" : $scope.data_about_me.name,
+                          "group" : 0
                       });
                     //make feed network
                     for(var n = 0; n < $scope.num_names_appear.length; n++){
@@ -559,7 +559,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               //make words data
               
               for(var key in message){
-                if(key.length < 10 && key.length > 2 && message[key] > 1 && key !== " " && key !== "" && $scope.word_filter.indexOf(key) === -1){
+                if(key.length < 10 && key.length > 2 && message[key] > 1 && key !== " " && key !== "" && $scope.word_filter.indexOf(key) === -1 && !($scope.data_about_me.name.includes(key))){
                   $scope.word_data.push({
                   text : key,
                   weight : parseInt(message[key])
