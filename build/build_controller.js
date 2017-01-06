@@ -41,7 +41,33 @@ appControllers.controller('FooterCtrl', ['$rootScope', '$state','$window', '$sco
 
 appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window', '$timeout' ,'$http','FBapi',
   function ($rootScope, $state, $scope,$window, $timeout, $http, FBapi) {
+    //waiting until get fb sdk 
+   $window.setTimeout(function(){
+       var gettoken = 0; 
+       //if there is no token
+         if(!$rootScope.token){
+              console.log("no Token");
+              gettoken = 100;
+                FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                 $rootScope.token = response.authResponse.accessToken;
+                    
+               
 
+              }
+                });
+             
+          }
+
+          //wait until get token
+        $window.setTimeout(function(){
+           init();
+        }, gettoken);
+
+       
+   }, 600);
+       
 
     //refresh button
     $scope.refresh = function(){
@@ -172,6 +198,28 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
 
      $scope.myDate = new Date("2010/01/01");
+
+
+      function distribute_group(feednetwork, group_num, group_lead,people_array, index){
+          feednetwork.nodes.push({
+                              "name" : people_array[index].key,
+                              "group" : group_num
+                          });
+        if(group_lead){
+            feednetwork.links.push(
+                            {"source":parseInt(index),"target":group_lead,"value": parseInt(people_array[index].y)}
+                             );
+        }
+        else{
+            feednetwork.links.push(
+                            {"source":parseInt(index),"target":0,"value": parseInt(people_array[index].y)}
+                             );
+        }
+    }
+
+
+
+
     //init function
     function init(){
 
@@ -294,23 +342,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
       
     }
 
-    function distribute_group(feednetwork, group_num, group_lead,people_array, index){
-          feednetwork.nodes.push({
-                              "name" : people_array[index].key,
-                              "group" : group_num
-                          });
-        if(group_lead){
-            feednetwork.links.push(
-                            {"source":parseInt(index),"target":group_lead,"value": parseInt(people_array[index].y)}
-                             );
-        }
-        else{
-            feednetwork.links.push(
-                            {"source":parseInt(index),"target":0,"value": parseInt(people_array[index].y)}
-                             );
-        }
-    }
-
+   
     function analyze_data(data){
 
               var ids = [];
@@ -440,24 +472,21 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                  time_count++;
 
 
-              }
-
-              $scope.num_names_appear.sort(function(a,b){
-                return a.y - b.y;
-              });
-              $scope.num_names_appear.reverse();
-
-              var g1_lead;
-              var g2_lead;
-              var g3_lead;
-              var g4_lead;
-              
-               $scope.feed_network.nodes.push({
-                              "name" : $scope.data_about_me.name,
-                              "group" : 0
-                });
-
                if(time_count === data.length){
+                  $scope.num_names_appear.sort(function(a,b){
+                      return a.y - b.y;
+                    });
+                    $scope.num_names_appear.reverse();
+
+                    var g1_lead;
+                    var g2_lead;
+                    var g3_lead;
+                    var g4_lead;
+                    
+                     $scope.feed_network.nodes.push({
+                                    "name" : $scope.data_about_me.name,
+                                    "group" : 0
+                      });
                     //make feed network
                     for(var n = 0; n < $scope.num_names_appear.length; n++){
 
@@ -592,7 +621,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               
 
               //get updated profile links 
-
+              var p_count = 0;
               if( $scope.data_about_me.total_profile_update){
                 for(var key in $scope.profile_link){
 
@@ -602,7 +631,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                      $scope.profile_link[response[1]].likes = response[0].summary.total_count;
                     profile_picture_object.push($scope.profile_link[response[1]]);
 
-                    if(profile_picture_object.length === profile_update_count){
+                    if(profile_picture_object.length === p_count){
                        profile_picture_object.sort(function(a, b) {
                             return a.likes - b.likes;
                         });
@@ -611,13 +640,8 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                     
                   }
                    
-                      
-                      
-                         
-                      
-                      
                     }
-                    
+                   p_count++; 
                   });
               }
 
@@ -631,36 +655,15 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               
 
 
-    }
+            }
 
-
-    //waiting until get fb sdk 
-   $window.setTimeout(function(){
-       var gettoken = 0; 
-       //if there is no token
-         if(!$rootScope.token){
-              console.log("no Token");
-              gettoken = 100;
-                FB.getLoginStatus(function(response) {
-                if (response.status === 'connected') {
-                // Logged into your app and Facebook.
-                 $rootScope.token = response.authResponse.accessToken;
-                    
-               
 
               }
-                });
-             
-          }
 
-          //wait until get token
-        $window.setTimeout(function(){
-           init();
-        }, gettoken);
+            
 
-       
-   }, 600);
-       
+
+
 
    
   
