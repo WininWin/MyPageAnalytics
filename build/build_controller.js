@@ -215,7 +215,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                             {"source":parseInt(index),"target":0,"value": parseInt(people_array[index].y)}
                              );
         }
-    }
+    } // dist group
 
 
 
@@ -340,7 +340,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
 
          
       
-    }
+    } //init
 
    
     function analyze_data(data){
@@ -490,8 +490,6 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                     //make feed network
                     for(var n = 0; n < $scope.num_names_appear.length; n++){
 
-                     
-
                         //grouping
                         var group = 0;
                         if($scope.num_names_appear[n].y > 10){
@@ -587,7 +585,7 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                    $scope.watcher[3] = true;
 
                 
-              }
+              
 
               //update number of events chart
               for(var key in num_events){
@@ -621,7 +619,6 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
               
 
               //get updated profile links 
-              var p_count = 0;
               if( $scope.data_about_me.total_profile_update){
                 for(var key in $scope.profile_link){
 
@@ -631,17 +628,15 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                      $scope.profile_link[response[1]].likes = response[0].summary.total_count;
                     profile_picture_object.push($scope.profile_link[response[1]]);
 
-                    if(profile_picture_object.length === p_count){
                        profile_picture_object.sort(function(a, b) {
                             return a.likes - b.likes;
                         });
 
                       $scope.most_likes_profile = profile_picture_object[profile_picture_object.length-1].link;
                     
-                  }
+                  
                    
                     }
-                   p_count++; 
                   });
               }
 
@@ -653,12 +648,12 @@ appControllers.controller('MainCtrl', ['$rootScope', '$state', '$scope','$window
                    $scope.img_done = true;
               }
               
+            } // if data.length == timecount
+
+            } // data for loop
 
 
-            }
-
-
-              }
+} // analyze
 
             
 
