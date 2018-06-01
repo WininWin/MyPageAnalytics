@@ -4,5 +4,3 @@ most common used words and graphs shows who appears most often on user’s page.
 information using Facebooks’ graph API and is execute through using Angular Js and Angular material design
 along with Angular nvd3 for charts and jqcloud for word clouds.
 
-## Live version
-https://wininwin.github.io/MyPageAnalytics
